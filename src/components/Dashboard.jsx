@@ -1,28 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../api/axios";
 
 const Dashboard = () => {
-  const newsArticles = [
-    {
-      id: 1,
-      title: "Lorem Ipsum",
-      url: "https://example.com/article1",
-      hnUrl: "https://news.ycombinator.com/item?id=123",
-      postedOnText: "2 hours ago",
-      upvotes: "10 points",
-      comments: "5 comments",
-    },
-    {
-      id: 2,
-      title: "Dolor Sit Amet",
-      url: "https://example.com/article2",
-      hnUrl: "https://news.ycombinator.com/item?id=456",
-      postedOn: "10 minutes ago",
-      upvotes: "15 points",
-      comments: "8 comments",
-    },
-    // Add more news articles here...
-  ];
+  const [newsArticles, setNewsArticles] = useState([]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     api
@@ -30,12 +10,16 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res);
+        setNewsArticles(
+          res.data
+            .sort((a, b) => new Date(b.postedOn) - new Date(a.postedOn))
+            .slice(0, 90)
+        );
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [newsArticles]);
 
   return (
     <div className="container mx-auto">
@@ -50,7 +34,7 @@ const Dashboard = () => {
               {idx + 1}. {article.title}
             </a>
             <p className="text-gray-600">
-              {article.upvotes} | {article.postedOn} | {article.comments} |{" "}
+              {article.upvotes} | {article.postedOnText} | {article.comments} |{" "}
               <a href={article.hnUrl} className="text-blue-500">
                 Hacker News
               </a>
