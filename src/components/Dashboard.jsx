@@ -7,8 +7,8 @@ const Dashboard = () => {
       id: 1,
       title: "Lorem Ipsum",
       url: "https://example.com/article1",
-      hackerNewsUrl: "https://news.ycombinator.com/item?id=123",
-      postedOn: "2 hours ago",
+      hnUrl: "https://news.ycombinator.com/item?id=123",
+      postedOnText: "2 hours ago",
       upvotes: "10 points",
       comments: "5 comments",
     },
@@ -16,7 +16,7 @@ const Dashboard = () => {
       id: 2,
       title: "Dolor Sit Amet",
       url: "https://example.com/article2",
-      hackerNewsUrl: "https://news.ycombinator.com/item?id=456",
+      hnUrl: "https://news.ycombinator.com/item?id=456",
       postedOn: "10 minutes ago",
       upvotes: "15 points",
       comments: "8 comments",
@@ -24,7 +24,7 @@ const Dashboard = () => {
     // Add more news articles here...
   ];
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     api
       .get("/news-items", {
         headers: { Authorization: `Bearer ${token}` },
@@ -51,7 +51,7 @@ const Dashboard = () => {
             </a>
             <p className="text-gray-600">
               {article.upvotes} | {article.postedOn} | {article.comments} |{" "}
-              <a href={article.hackerNewsUrl} className="text-blue-500">
+              <a href={article.hnUrl} className="text-blue-500">
                 Hacker News
               </a>
             </p>

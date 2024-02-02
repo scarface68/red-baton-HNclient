@@ -9,6 +9,7 @@ const Form = ({ text }) => {
   const [modalText, setModalText] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [goNext, setGoNext] = useState(false);
+  const [userId, setUserId] = useState("");
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -57,8 +58,9 @@ const Form = ({ text }) => {
       api
         .post("/login", { email, password })
         .then((res) => {
-          const token = res.data.token;
+          const { token, userId } = res.data;
           localStorage.setItem("token", token); // Save token to local storage
+          setUserId(userId);
           setModalText("Login successful");
           setShowModal(true);
           setGoNext(true);
@@ -90,7 +92,7 @@ const Form = ({ text }) => {
                     if (text === "Signup") {
                       navigate("/login");
                     } else {
-                      navigate("/dashboard");
+                      navigate(`/dashboard/${userId}`);
                     }
                   }
                 }}

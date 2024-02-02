@@ -7,7 +7,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Form text="Signup" />} />
         <Route path="/login" element={<Form text="Login" />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/:userId" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
