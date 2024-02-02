@@ -82,7 +82,7 @@ const Form = ({ text }) => {
             <p className="text-red-500">{modalText}</p>
             <div className="flex justify-center">
               <button
-                className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
+                className="mt-4 bg-custom-orange hover:bg-custom-hover font-bold py-1 px-3 rounded"
                 onClick={() => {
                   setShowModal(false);
                   if (goNext) {
@@ -104,7 +104,7 @@ const Form = ({ text }) => {
       <div
         className={`max-w-md mx-auto ${showModal ? "opacity-50" : ""} mt-20`}
       >
-        <h1 className="text-4xl font-bold rounded text-white p-3 bg-green-500 text-center">
+        <h1 className="text-4xl font-bold rounded p-3 bg-custom-orange text-center">
           {text}
         </h1>
         <form
@@ -149,7 +149,7 @@ const Form = ({ text }) => {
 
           <div className="flex items-center justify-between">
             <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-custom-orange hover:bg-custom-hover font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               {text}

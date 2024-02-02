@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       colors: {
         "custom-orange": "#ff6600",
+        'custom-hover': '#cc5200',
       },
     },
   },
