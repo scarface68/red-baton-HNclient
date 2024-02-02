@@ -26,7 +26,7 @@ npm install
 npm run dev
 ```
 
-# Create .env at root and add the variables provided via mail
+# Create .env at root
 ```
 touch .env
 ```
