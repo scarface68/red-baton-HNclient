@@ -4,10 +4,11 @@ import api from "../api/axios";
 const Form = ({ text }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [modalText, setModalText] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -19,8 +20,25 @@ const Form = ({ text }) => {
     setEmail("");
   };
 
+  function isValidEmail(email) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (text === "Signup") {
+      if (!isValidEmail(email)) {
+        setModalText("Enter a valid email");
+        setShowModal(true);
+        return;
+      }
+      if (password.length < 6) {
+        setModalText("Password must be at least 6 characters long");
+        setShowModal(true);
+        return;
+      }
+    }
     // Reset form values
     resetForm();
   };
@@ -28,21 +46,19 @@ const Form = ({ text }) => {
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
           <div className="bg-white shadow-lg rounded px-8 py-4">
-            <p className="text-red-500">
-              Only people within the age limit of 18-65 can enroll for the
-              monthly classes
-            </p>
-            <button
-              className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                setShowModal(false);
-                resetForm();
-              }} // Close the modal when the button is clicked
-            >
-              Close
-            </button>
+            <p className="text-red-500">{modalText}</p>
+            <div className="flex justify-center">
+                <button
+                    className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
+                    onClick={() => {
+                        setShowModal(false);
+                    }}
+                >
+                    Close
+                </button>
+            </div>
           </div>
         </div>
       )}
@@ -79,7 +95,7 @@ const Form = ({ text }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
             >
-              Name<span className="text-red-500">*</span>
+              Password<span className="text-red-500">*</span>
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -87,7 +103,7 @@ const Form = ({ text }) => {
               type="password"
               placeholder="Enter Password"
               value={password}
-              onChange={handleNameChange}
+              onChange={handlePasswordChange}
               required
             />
           </div>
