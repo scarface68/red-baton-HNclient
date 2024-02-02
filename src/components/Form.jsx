@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const Form = ({ text }) => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [modalText, setModalText] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [goNext, setGoNext] = useState(false);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -44,6 +47,7 @@ const Form = ({ text }) => {
           console.log(res);
           setModalText("Signup successful");
           setShowModal(true);
+          setGoNext(true);
         })
         .catch((err) => {
           console.log(err);
@@ -57,6 +61,7 @@ const Form = ({ text }) => {
           console.log(res);
           setModalText("Login successful");
           setShowModal(true);
+          setGoNext(true);
         })
         .catch((err) => {
           console.log(err);
@@ -80,6 +85,14 @@ const Form = ({ text }) => {
                 className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
                 onClick={() => {
                   setShowModal(false);
+                  if (goNext) {
+                    setGoNext(false);
+                    if (text === "Signup") {
+                      navigate("/login");
+                    } else {
+                      navigate("/dashboard");
+                    }
+                  }
                 }}
               >
                 Close
