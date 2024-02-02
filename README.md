@@ -30,6 +30,10 @@ npm run dev
 ```
 touch .env
 ```
+# env variables
+```
+VITE_APP_BACKEND_URL="http://localhost:5000"
+```
 
 # Sign Up with valid email and strong password
 
