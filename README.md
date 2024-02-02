@@ -26,5 +26,10 @@ npm install
 npm run dev
 ```
 
+# Create .env at root and add the variables provided via mail
+```
+touch .env
+```
+
 # Sign Up with valid email and strong password
 
