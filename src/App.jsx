@@ -1,10 +1,10 @@
-import { useState } from "react";
-
 function App() {
   return (
-    <>
-      <h1>React App</h1>
-    </>
+    <div className="App">
+      <header className="text-center bg-blue-500 text-white text-5xl p-5">
+        Hello, Tailwind!
+      </header>
+    </div>
   );
 }
 
