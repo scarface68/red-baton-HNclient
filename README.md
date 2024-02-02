@@ -18,4 +18,5 @@ npm install
 npm run dev
 ```
 
+# Sign Up with valid email and strong password
 
