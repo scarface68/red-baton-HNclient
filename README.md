@@ -34,6 +34,7 @@ touch .env
 ```
 VITE_APP_BACKEND_URL="http://localhost:5000"
 ```
+# Restart server after adding env variables
 
 # Sign Up with valid email and strong password
 
