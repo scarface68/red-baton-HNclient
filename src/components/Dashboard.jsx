@@ -45,13 +45,11 @@ const Dashboard = () => {
                 }
               )
               .then((res) => {
-                // Trigger useEffect here
-                console.log(res.data);
+                window.location.reload();
               })
               .catch((err) => {
                 console.log(err);
               });
-            console.log(localStorage.getItem("token"));
           }}
         >
           Fetch latest

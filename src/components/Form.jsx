@@ -60,6 +60,20 @@ const Form = ({ text }) => {
         .then((res) => {
           const { token, userId } = res.data;
           localStorage.setItem("token", token); // Save token to local storage
+          api
+            .post(
+              "/news-items",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
+            .then((res) => {})
+            .catch((err) => {
+              console.log(err);
+            });
           setUserId(userId);
           setModalText("Login successful");
           setShowModal(true);
@@ -147,6 +161,17 @@ const Form = ({ text }) => {
               onChange={handlePasswordChange}
               required
             />
+
+            {text === "Signup" && (
+              <div className="flex mt-3 items-center justify-center">
+                <a href="/login">Already Signed Up?</a>
+              </div>
+            )}
+            {text === "Login" && (
+              <div className="flex mt-3 items-center justify-center">
+                <a href="/signup">Have not signed up yet?</a>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center justify-between">
