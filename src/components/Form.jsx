@@ -38,6 +38,18 @@ const Form = ({ text }) => {
         setShowModal(true);
         return;
       }
+      api
+        .post("/signup", { email, password })
+        .then((res) => {
+          console.log(res);
+          setModalText("Signup successful");
+          setShowModal(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setModalText("Signup failed");
+          setShowModal(true);
+        });
     }
     // Reset form values
     resetForm();
@@ -50,14 +62,14 @@ const Form = ({ text }) => {
           <div className="bg-white shadow-lg rounded px-8 py-4">
             <p className="text-red-500">{modalText}</p>
             <div className="flex justify-center">
-                <button
-                    className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
-                    onClick={() => {
-                        setShowModal(false);
-                    }}
-                >
-                    Close
-                </button>
+              <button
+                className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
