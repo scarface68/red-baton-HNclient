@@ -24,7 +24,7 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto">
       <div className="flex bg-custom-orange  items-center mb-4">
-        <img src="/y18.svg" alt="Logo" className="w-6 h-6 mr-2" />
+        <img src="/y18.svg" alt="Logo" className="w-6 h-6 m-2 border border-white" />
         <h1 className="text-2xl font-bold ">Hacker News Clone</h1>
       </div>
       <ul className="space-y-2">
