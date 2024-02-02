@@ -169,7 +169,7 @@ const Form = ({ text }) => {
             )}
             {text === "Login" && (
               <div className="flex mt-3 items-center justify-center">
-                <a href="/signup">Have not signed up yet?</a>
+                <a href="/">Have not signed up yet?</a>
               </div>
             )}
           </div>
