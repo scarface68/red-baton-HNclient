@@ -1,26 +1,84 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
+import { useParams } from "react-router-dom";
 
 const Dashboard = () => {
   const [newsArticles, setNewsArticles] = useState([]);
+  const { userId } = useParams();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(token);
     api
       .get("/news-items", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        const filteredArticles = res.data.filter(
+          (article) => !article.deleted.includes(userId)
+        );
         setNewsArticles(
-          res.data
+          filteredArticles
             .sort((a, b) => new Date(b.postedOn) - new Date(a.postedOn))
-            .slice(0, 90)
+            .slice(0, Math.min(90, filteredArticles.length))
         );
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [newsArticles]);
+
+  const handleCheckboxChange = (articleId) => {
+    api
+      .put(
+        `/news-items/${articleId}/read`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then((res) => {
+        setNewsArticles((articles) => {
+          return articles.map((article) => {
+            if (article.id === articleId) {
+              return {
+                ...article,
+                read: [...article.read, userId],
+              };
+            }
+            return article;
+          });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDelete = (articleId) => {
+    api
+      .put(
+        `/news-items/${articleId}/delete`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then((res) => {
+        setNewsArticles((articles) => {
+          return articles.map((article) => {
+            if (article.id === articleId) {
+              return {
+                ...article,
+                deleted: [...article.deleted, userId],
+              };
+            }
+            return article;
+          });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="container mx-auto">
@@ -65,7 +123,23 @@ const Dashboard = () => {
               {article.upvotes} | {article.postedOnText} | {article.comments} |{" "}
               <a href={article.hnUrl} className="text-blue-500">
                 Hacker News
-              </a>
+              </a>{" "}
+              |{" "}
+              <label>
+                <input
+                  type="checkbox"
+                  checked={article.read.length && article.read.includes(userId)}
+                  onChange={() => handleCheckboxChange(article.id)}
+                />
+                <span style={{ marginLeft: "0.5rem" }}>Read</span>
+              </label>{" "}
+              |{" "}
+              <button
+                className="text-red-500"
+                onClick={() => handleDelete(article.id)}
+              >
+                Delete
+              </button>
             </p>
           </li>
         ))}
