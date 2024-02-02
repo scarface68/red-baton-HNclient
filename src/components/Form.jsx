@@ -44,7 +44,6 @@ const Form = ({ text }) => {
       api
         .post("/signup", { email, password })
         .then((res) => {
-          console.log(res);
           setModalText("Signup successful");
           setShowModal(true);
           setGoNext(true);
@@ -58,7 +57,8 @@ const Form = ({ text }) => {
       api
         .post("/login", { email, password })
         .then((res) => {
-          console.log(res);
+          const token = res.data.token;
+          localStorage.setItem("token", token); // Save token to local storage
           setModalText("Login successful");
           setShowModal(true);
           setGoNext(true);
