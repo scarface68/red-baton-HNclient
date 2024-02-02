@@ -50,6 +50,20 @@ const Form = ({ text }) => {
           setModalText("Signup failed");
           setShowModal(true);
         });
+    } else {
+      api
+        .post("/login", { email, password })
+        .then((res) => {
+          console.log(res);
+          setModalText("Login successful");
+          setShowModal(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          const errorMessage = err.response.data.error;
+          setModalText(errorMessage);
+          setShowModal(true);
+        });
     }
     // Reset form values
     resetForm();
